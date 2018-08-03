@@ -251,7 +251,7 @@ Describe -Name "Memory Performance for $computer" -Fixture {
 
         $Cases = $Counters.Where({$_.Counter -eq $Counter -and $_.Instance -ne '_total'}).Value |
 
-        Select-Object -Property 'Instnace' |
+        Select-Object -Property 'Instance' |
 
         ConvertTo-HashTable
 
