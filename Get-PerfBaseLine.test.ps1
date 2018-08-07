@@ -246,10 +246,8 @@ Process {
             $Counter = '% Usage'
     
             $Cases = $Counters.Where({$_.Counter -eq $Counter -and $_.Instance -ne '_total'}).Value |
-    
-                Select-Object -Property 'Instance' |
-    
-                ConvertTo-HashTable
+
+                Select-Object -Property 'Instance' | ConvertTo-HashTable
     
             It -name 'Should not be Greater than 10% for: <Instance>' -TestCases $Cases {
     
