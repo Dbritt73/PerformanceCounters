@@ -247,13 +247,13 @@ Process {
     
             $Cases = $Counters.Where({$_.Counter -eq $Counter -and $_.Instance -ne '_total'}).Value |
     
-                Select-Object -Property 'Instnace' |
+                Select-Object -Property 'Instance' |
     
                 ConvertTo-HashTable
     
             It -name 'Should not be Greater than 10% for: <Instance>' -TestCases $Cases {
     
-                Param($instance)
+                Param($Instance)
     
                 $Counters.Where({$_.Counter -eq $Counter -and $_.Instance -eq $instance}).Value |
     
@@ -334,12 +334,7 @@ Process {
         }
     
     }
-    
+
 }
 
 End {}
-
-
-
-
-
