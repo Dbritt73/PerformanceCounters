@@ -281,7 +281,7 @@ Process {
                     
                     $_.Instance -eq $Instance -and $_.Counter -eq $Counter
                 
-                }).Value) / ((Get-NetAdapter -Physical).Speed) * 100 | Should -Not -BeGreaterThan 65
+                }).Value) / ((Get-NetAdapter -Physical | Where-object {$_.Status -ne 'Disconnected'}).Speed) * 100 | Should -Not -BeGreaterThan 65
     
                 #((Get-NetAdapter @Params -InterfaceDescription ($Instance -replace '\[', '(' -replace '\]', ')' -replace '_', '#')).Speed) * 100 | Should -Noot -BeGreaterThan 65
     
