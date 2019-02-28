@@ -1,6 +1,8 @@
 [CmdletBinding()]
 param (
+
   [Microsoft.Management.Infrastructure.CimSession]$CimSession
+
 )
 
 Begin {
@@ -58,15 +60,15 @@ Begin {
 
         param (
 
-            [Parameter( Position = 0, 
+            [Parameter( Position = 0,
                         Mandatory = $true,
                         ValueFromPipeline = $true,
                         HelpMessage = 'Select-Object property, maintaining typename header')]
             [PSObject[]]$InputObject,
 
-            [ValidateSet('Property', 'NoteProperty')]
             [Parameter( Position = 1,
                         HelpMessage = 'Property or NoteProperty')]
+            [ValidateSet('Property', 'NoteProperty')]
             [String]$MemberType = 'NoteProperty'
 
         )
@@ -141,7 +143,7 @@ Process {
 
                 Param ($Instance)
 
-                $Counters.Where({$_.Instance -eq $Instance -and $_.Counter -eq $Counter}).Value | 
+                $Counters.Where({$_.Instance -eq $Instance -and $_.Counter -eq $Counter}).Value |
 
                 Should -Not -BeGreaterThan 2
 
@@ -153,9 +155,9 @@ Process {
 
             $Counter = '% Idle Time'
 
-            $Cases = $Counters.Where({$_.Counter -eq $Counter -and $_.Instance -ne '_total'}) | 
+            $Cases = $Counters.Where({$_.Counter -eq $Counter -and $_.Instance -ne '_total'}) |
 
-                Select-Object -Property 'Instance' | 
+                Select-Object -Property 'Instance' |
 
                     ConvertTo-HashTable
 
@@ -173,7 +175,7 @@ Process {
 
             $Counter = 'Avg. Disk Sec/Read'
 
-            $Cases = $Counters.Where({$_.Counter -eq $Counter -and $_.Instance -ne '_total'}) | 
+            $Cases = $Counters.Where({$_.Counter -eq $Counter -and $_.Instance -ne '_total'}) |
 
                 Select-object -Property 'Instance' | ConvertTo-HashTable
 
@@ -181,7 +183,7 @@ Process {
 
                 Param ($Instance)
 
-                ($Counters.Where({$_.Instance -eq $Instance -and $_.Counter -eq $Counter}).Value * 1000 -as [decimal]) | 
+                ($Counters.Where({$_.Instance -eq $Instance -and $_.Counter -eq $Counter}).Value * 1000 -as [decimal]) |
 
                     Should -Not -BeGreaterThan 20
 
@@ -193,7 +195,7 @@ Process {
 
             $Counter = 'Avg. Disk sec/Write'
 
-            $Cases = $Counters.Where({$_.Counter -eq $Counter -and $_.Instance -ne '_total'}) | 
+            $Cases = $Counters.Where({$_.Counter -eq $Counter -and $_.Instance -ne '_total'}) |
 
                 Select-object -Property 'Instance' | ConvertTo-HashTable
 
@@ -201,7 +203,7 @@ Process {
 
                 Param ($instance)
 
-                $Counters.Where({$_.Instance -eq $Instance -and $_.Counter -eq $Counter}).Value * 1000 -as [Decimal] | 
+                $Counters.Where({$_.Instance -eq $Instance -and $_.Counter -eq $Counter}).Value * 1000 -as [Decimal] |
 
                     Should -Not -BeGreaterThan 20
 
@@ -221,7 +223,7 @@ Process {
 
                     $_.Counter -eq 'Available Bytes'
 
-                }).Value) / 1MB) / ((Get-CimInstance -ClassName 'Win32_PhysicalMemory' -Property 'Capacity' | 
+                }).Value) / 1MB) / ((Get-CimInstance -ClassName 'Win32_PhysicalMemory' -Property 'Capacity' |
 
                     Measure-Object -Property 'Capacity' -Sum).Sum / 1MB) * 100 -as [int] |
 
@@ -293,7 +295,7 @@ Process {
 
             $Counter = 'Output Queue Length'
 
-            $Cases = $Counters.Where({$_.Counter -eq $Counter -and $_.Instance -notmatch 'isatap'}) | 
+            $Cases = $Counters.Where({$_.Counter -eq $Counter -and $_.Instance -notmatch 'isatap'}) |
 
                 Select-Object -Property Instance | ConvertTo-HashTable
 
@@ -301,7 +303,7 @@ Process {
 
                 Param ($Instance)
 
-                $Counters.Where({$_.Instance -eq $Instance -and $_.Counter -eq $Counter}).Value | 
+                $Counters.Where({$_.Instance -eq $Instance -and $_.Counter -eq $Counter}).Value |
 
                     Should -Not -BeGreaterThan 2
 
@@ -323,7 +325,7 @@ Process {
 
                 Param($Instance)
 
-                $Counters.Where({$_.Instnace -eq $Instance -and $_.Counter -eq $Counter}).Value | 
+                $Counters.Where({$_.Instnace -eq $Instance -and $_.Counter -eq $Counter}).Value |
 
                     Should  -Not -BeGreaterThan 90
 
